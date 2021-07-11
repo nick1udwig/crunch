@@ -25,7 +25,7 @@ Replace the group and graph with a `%chat` available on your (test) ship.
 
 :: scry the %chat graph and extract it from the scry response
 =chat-scry .^(update:gs %gx /=graph-store=/graph/(scot %p ~zod)/lounge-5677/noun)
-=chat-graph ?.  ?=(%add-graph -.q.lounge-scry)  ~  ?~  graph.q.lounge-scry  ~  graph.q.lounge-scry
+=chat-graph ?.  ?=(%add-graph -.q.chat-scry)  ~  ?~  graph.q.chat-scry  ~  graph.q.chat-scry
 
 :: build channel-info argument used by walk-chat-graph
 =ci `channel-info:crunch-sur`[`resource:res`[entity=~zod name=%fake-zods-test-channel] `resource:res`[entity=~zod name=%lounge-5677] channel-type=%chat]
