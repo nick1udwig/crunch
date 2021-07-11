@@ -14,7 +14,7 @@ A generator and thread to make using the library as simple as a command-line cal
 # Usage
 *WIP*
 
-The following is example usage of the Crunch library to extract data from a `%chat` graph and print to the Dojo using the `walk-chat-graph` arm.
+The following is example usage of the Crunch library to extract data from a `%chat` graph and print to the Dojo using the `walk-graph` arm.
 In the example, the group is `~zod/fake-zods-test-channel` and the graph is `~zod/lounge-5677`.
 Replace the group and graph with a `%chat` available on your (test) ship.
 ```
@@ -27,18 +27,17 @@ Replace the group and graph with a `%chat` available on your (test) ship.
 =chat-scry .^(update:gs %gx /=graph-store=/graph/(scot %p ~zod)/lounge-5677/noun)
 =chat-graph ?.  ?=(%add-graph -.q.chat-scry)  ~  ?~  graph.q.chat-scry  ~  graph.q.chat-scry
 
-:: build channel-info argument used by walk-chat-graph
+:: build channel-info argument used by walk-graph
 =ci `channel-info:crunch-sur`[`resource:res`[entity=~zod name=%fake-zods-test-channel] `resource:res`[entity=~zod name=%lounge-5677] channel-type=%chat]
 
 :: output to Dojo with post content in the format:
 :: timestamp,ship,group,channel,channel-type,content
-(walk-chat-graph.crunch chat-graph %.y ci)
+(walk-graph.crunch chat-graph %.y ci)
 
 :: output to csv file at path pax without post content
 =pax `path`/chat/csv
-|pass (note-write-csv-to-clay.crunch pax (walk-chat-graph.crunch chat-graph %.y ci))
+|pass (note-write-csv-to-clay.crunch pax (walk-graph.crunch chat-graph %.y ci))
 ```
-
 
 # ACKnowledgements
 Thanks to the Urbit Foundation for funding this project through the [Urbit Apprenticeships program](https://urbit.org/grants/apprenticeships/).

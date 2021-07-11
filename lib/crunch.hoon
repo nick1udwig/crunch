@@ -30,16 +30,25 @@
 ::
 ++  tac  (cury cat 3)
 :: 
-++  walk-chat-graph
+++  walk-graph
   |=  [=graph:gs content=? =channel-info:c]
   ^-  wain
   %-  flop
   %+  roll  ~(val by graph)
   |=  [=node:gs out=wain]
   ^-  wain
+  =?  out  ?=(%graph -.children.node)
+    (weld out (walk-graph p.children.node content channel-info))
   ?-  -.post.node
-    %|  out
+    %|
+      :: do not output deleted posts
+      ::
+      out
     %&
+      ?~  contents.p.post.node
+        :: do not output structural nodes
+        ::
+        out
       :_  out
       =/  post-no-content=@t  (format-post-to-cord p.post.node channel-info)
       ?-  content
