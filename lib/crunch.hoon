@@ -88,12 +88,20 @@
   |=  =content:p
   ^-  @t
   ?-  -.content
-    %text       text.content
+    %text       (escape-characters-in-cord text.content)
     %mention    (scot %p ship.content)
     %url        url.content
     %code       expression.content    :: TODO: also print output?
     %reference  (reference-content-to-cord reference.content)
   ==
+::
+++  escape-characters-in-cord
+  |=  =cord
+  ^-  @t
+  %-  crip
+  %-  mesc
+  %-  trip
+  cord
 ::
 ++  reference-content-to-cord
   |=  =reference:p
