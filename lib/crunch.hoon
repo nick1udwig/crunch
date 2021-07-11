@@ -105,4 +105,9 @@
     %group  (resource-to-cord group.reference)
     %graph  :(tac (resource-to-cord group.reference) ': ' (resource-to-cord resource.uid.reference))
   ==
+::
+++  note-write-csv-to-clay
+  |=  [pax=path file-content=wain]
+  ?>  =(%csv (snag (dec (lent pax)) pax))
+  [%c [%info %home %& [pax %ins %csv !>(file-content)]~]]
 --

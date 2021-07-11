@@ -23,20 +23,20 @@ Replace the group and graph with a `%chat` available on your (test) ship.
 =crunch-sur -build-file %/sur/crunch/hoon
 =crunch -build-file %/lib/crunch/hoon
 
-:: scry the graph and extract it from the scry response
-=lounge-scry .^(update:gs %gx /=graph-store=/graph/(scot %p ~zod)/lounge-5677/noun)
-=lounge-graph ?.  ?=(%add-graph -.q.lounge-scry)  ~  ?~  graph.q.lounge-scry  ~  graph.q.lounge-scry
-
-:: scry the %chat graph you wish to extract from
+:: scry the %chat graph and extract it from the scry response
 =chat-scry .^(update:gs %gx /=graph-store=/graph/(scot %p ~zod)/lounge-5677/noun)
+=chat-graph ?.  ?=(%add-graph -.q.lounge-scry)  ~  ?~  graph.q.lounge-scry  ~  graph.q.lounge-scry
 
 :: build channel-info argument used by walk-chat-graph
 =ci `channel-info:crunch-sur`[`resource:res`[entity=~zod name=%fake-zods-test-channel] `resource:res`[entity=~zod name=%lounge-5677] channel-type=%chat]
 
-:: output without and with post content in the format:
+:: output to Dojo with post content in the format:
 :: timestamp,ship,group,channel,channel-type,content
-(walk-chat-graph.crunch lounge-graph %.n ci)
-(walk-chat-graph.crunch lounge-graph %.y ci)
+(walk-chat-graph.crunch chat-graph %.y ci)
+
+:: output to csv file at path pax without post content
+=pax `path`/chat/csv
+|pass (note-write-csv-to-clay.crunch pax (walk-chat-graph.crunch chat-graph %.y ci))
 ```
 
 
@@ -44,4 +44,4 @@ Replace the group and graph with a `%chat` available on your (test) ship.
 Thanks to the Urbit Foundation for funding this project through the [Urbit Apprenticeships program](https://urbit.org/grants/apprenticeships/).
 You can find the [bounty here](https://urbit.org/grants/bounties/analytics-script/).
 
-Thanks to `~timluc-miptev`, `~wolref-podlex`, and `~taller-ravnut` for this opportunity.
+Thanks to `~timluc-miptev`, `~wolref-podlex`, and `~taller-ravnut` for mentorship and giving me this opportunity.
