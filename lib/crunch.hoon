@@ -45,9 +45,8 @@
       ?-  content
         %|  post-no-content
         %&
-          %+  join-cords
-            ','
-          ~[post-no-content (contents-to-cord contents.p.post.node)]
+          %+  join-cords  ','
+            ~[post-no-content (contents-to-cord contents.p.post.node)]
       ==
   ==
 ::
@@ -83,9 +82,7 @@
     ''
   %+  join-cords
     ' '
-  %+  turn
-    contents
-  content-to-cord
+  (turn contents content-to-cord)
 ::
 ++  content-to-cord
   |=  =content:p
