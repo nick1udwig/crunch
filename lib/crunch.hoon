@@ -1,7 +1,7 @@
 /-  c=crunch, gs=graph-store, ms=metadata-store, p=post, r=resource
 ::
 =<
-  |_  =bowl:gall
+  |_  [our=ship now=@da]
   ++  walk-graph-associations
     |=  [=associations:ms content=?]
     ^-  wain
@@ -33,9 +33,9 @@
     =/  scry-response=update:gs
       .^  update:gs
         %gx
-        (scot %p our.bowl)
+        (scot %p our)
         %graph-store
-        (scot %da now.bowl)
+        (scot %da now)
         %graph
         (scot %p entity.graph-resource)
         name.graph-resource

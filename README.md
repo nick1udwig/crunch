@@ -53,10 +53,8 @@ Replace the group and graph with a `%chat` available on your (test) ship.
 :: scry metadata about all graphs
 =assoc-scry .^(associations:ms %gx /=metadata-store=/app-name/graph/noun)
 
-:: output to Dojo without post content.
-:: a fresh bowl is required for the underlying scry to work,
-::  hence the rather long argument to the walk-graph-associations arm
-(~(walk-graph-associations crunch `bowl:gall`[[our our %dojo] [*boat:gall *bitt:gall] 0 eny now our %home da+now]) assoc-scry %.n)
+:: output to Dojo without post content
+(~(walk-graph-associations crunch [our now]) assoc-scry %.n)
 ```
 
 # ACKnowledgements
