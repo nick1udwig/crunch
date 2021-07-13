@@ -41,6 +41,24 @@ Replace the group and graph with a `%chat` available on your (test) ship.
 |pass (note-write-csv-to-clay.crunch pax (walk-graph.crunch chat-graph %.y ci))
 ```
 
+## Export all graph data in a group
+The following is example usage of the Crunch library to extract data from all graphs in a group and print to the Dojo using the `walk-graph-associations` arm.
+In the example, *all graphs the user is a part of will be exported*.
+Replace the group and graph with a `%chat` available on your (test) ship.
+```
+:: import library and types we'll be using
+=ms -build-file %/sur/metadata-store/hoon
+=crunch -build-file %/lib/crunch/hoon
+
+:: scry metadata about all graphs
+=assoc-scry .^(associations:ms %gx /=metadata-store=/app-name/graph/noun)
+
+:: output to Dojo without post content.
+:: a fresh bowl is required for the underlying scry to work,
+::  hence the rather long argument to the walk-graph-associations arm
+(~(walk-graph-associations crunch `bowl:gall`[[our our %dojo] [*boat:gall *bitt:gall] 0 eny now our %home da+now]) assoc-scry %.n)
+```
+
 # ACKnowledgements
 Thanks to the Urbit Foundation for funding this project through the [Urbit Apprenticeships program](https://urbit.org/grants/apprenticeships/).
 You can find the [bounty here](https://urbit.org/grants/bounties/analytics-script/).

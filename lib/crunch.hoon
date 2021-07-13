@@ -1,28 +1,54 @@
 /-  c=crunch, gs=graph-store, ms=metadata-store, p=post, r=resource
 ::
+=<
+  |_  =bowl:gall
+  ++  walk-graph-associations
+    |=  [=associations:ms content=?]
+    ^-  wain
+    %-  ~(rep by associations)
+    |=  [[=md-resource:ms =association:ms] out=wain]
+    ^-  wain
+    ?>  ?=(%graph app-name.md-resource)
+    ?>  ?=(%graph -.config.metadatum.association)
+    :: scry the graph
+    ::
+    =/  graph=(unit graph:gs)  (scry-graph resource.md-resource)
+    ?~  graph
+      out
+    :: prepare channel-info argument
+    ::
+    =/  channel-info=channel-info:c
+      :*
+        group.association
+        resource.md-resource
+        module.config.metadatum.association
+      ==
+    :: walk the graph
+    ::
+    (weld out (walk-graph u.graph content channel-info))
+  ::
+  ++  scry-graph
+    |=  graph-resource=resource:r
+    ^-  (unit graph:gs)
+    =/  scry-response=update:gs
+      .^  update:gs
+        %gx
+        (scot %p our.bowl)
+        %graph-store
+        (scot %da now.bowl)
+        %graph
+        (scot %p entity.graph-resource)
+        name.graph-resource
+        /noun
+      ==
+    ?.  ?=(%add-graph -.q.scry-response)
+      ~
+    ?~  graph.q.scry-response
+      ~
+    [~ graph.q.scry-response]
+  --
+::
 |%
-:: ++  walk-graph-associations
-::   |=  =associations:ms
-::   ^-  wain
-::   |^
-::   %-  ~(urn by associations)
-::   |=  [=md-resource:ms =association:ms]
-::   ^-  wain
-::   :: fetch graph-wide fields
-::   ::
-::   :: =/  group-tape=@t    (resource-to-cord group.association)
-::   :: =/  channel-tape=@t  (resource-to-cord resource.md-resource)
-::   :: =/  channel-type=@t
-::   ::   ?.  ?=(%graph config.metadatum.association)
-::   ::     !!
-::   ::   module.config.metadatum.association
-::   ?>  ?=(%graph config.metadatum.association)
-::   :: walk graphs
-::   ::
-::   =/  (walk-chat-graph)
-::   :: output to CSV
-::   ::
-::   ::
 ++  resource-to-cord
   |=  =resource:r
   ^-  @t
