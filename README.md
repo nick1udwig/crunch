@@ -41,8 +41,24 @@ Replace the group and graph with a `%chat` available on your (test) ship.
 |pass (note-write-csv-to-clay.crunch pax (walk-graph.crunch chat-graph %.y ci))
 ```
 
-## Export all graph data in a group
-The following is example usage of the Crunch library to extract data from all graphs in a group and print to the Dojo using the `walk-graph-associations` arm.
+## Export multiple graphs of data
+### The easy way
+Make use of the included generator to extract all graph data from your ship and output it to the CSV of your choice.
+```
+|crunch /my-csv-file-name/csv now
+```
+
+Currently working optional arguments:
+* `groups`: `(list path)` of groups to export; do not export any others. Default: export all.
+* `content`: `?`, whether to export content or not. Default: export content (TODO: flip default).
+
+Example usage exporting a specific group with no content:
+```
+|crunch /my-csv-file-name/csv now, =groups ~[/~zod/fake-zods-test-channel], =content %.n
+```
+
+### The hard way
+The following is example usage of the Crunch library to extract data from all graphs your ship contains and print to the Dojo using the `walk-graph-associations` arm.
 In the example, *all graphs the user is a part of will be exported*.
 Replace the group and graph with a `%chat` available on your (test) ship.
 ```

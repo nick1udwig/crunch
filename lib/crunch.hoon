@@ -46,6 +46,17 @@
     ?~  graph.q.scry-response
       ~
     [~ graph.q.scry-response]
+  ::
+  ++  scry-graph-associations
+    |=  ~
+    ^-  associations:ms
+    .^  associations:ms
+      %gx
+      (scot %p our)
+      %metadata-store
+      (scot %da now)
+      /app-name/graph/noun
+    ==
   --
 ::
 |%
@@ -150,4 +161,28 @@
   |=  [pax=path file-content=wain]
   ?>  =(%csv (snag (dec (lent pax)) pax))
   [%c [%info %home %& [pax %ins %csv !>(file-content)]~]]
+::
+++  filter-associations-by-group-resources
+  |=  [=associations:ms group-resources=(set resource:r)]
+  ^-  associations:ms
+  %-  ~(rep by associations)
+  |=  [[=md-resource:ms =association:ms] out=associations:ms]
+  ^-  associations:ms
+  ?.  (~(has in group-resources) group.association)
+    out
+  (~(put by out) md-resource association)
+::
+++  paths-to-resources
+  |=  paxs=(list path)
+  ^-  (set resource:r)
+  %-  ~(gas in *(set resource:r))
+  (turn paxs path-to-resource)
+::
+++  path-to-resource
+  |=  pax=path
+  ^-  resource:r
+  =/  entity=@p  (slav %p -.pax)
+  =/  name=@tas  -.+.pax
+  [entity name]
+::
 --
