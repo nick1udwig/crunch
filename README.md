@@ -14,12 +14,14 @@ A generator and thread to make using the library as simple as a command-line cal
 # Usage
 *WIP*
 
-The following is example usage of the Crunch library to extract data from a `%chat` graph and print to the Dojo using the `walk-graph` arm.
+## Export graph data
+The following is example usage of the Crunch library to extract data from a `%chat` graph and print to the Dojo or to CSV using the `walk-graph` arm.
 In the example, the group is `~zod/fake-zods-test-channel` and the graph is `~zod/lounge-5677`.
 Replace the group and graph with a `%chat` available on your (test) ship.
 ```
 :: import library and types we'll be using
 =res -build-file %/sur/resource/hoon
+=gs -build-file %/sur/graph-store/hoon
 =crunch-sur -build-file %/sur/crunch/hoon
 =crunch -build-file %/lib/crunch/hoon
 
