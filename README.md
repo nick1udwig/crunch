@@ -15,7 +15,7 @@ A generator and thread to make using the library as simple as a command-line cal
 ## Export multiple graphs of data
 Make use of the included generator to extract all graph data from your ship (without post content) and output it to the CSV of your choice.
 ```
-|crunch /my-csv-file-name/csv now
+|crunch /my-csv-file-name/csv *@da
 ```
 
 Optional arguments:
