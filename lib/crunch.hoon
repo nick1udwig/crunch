@@ -3,7 +3,7 @@
 =<
   |_  [our=ship now=@da]
   ++  walk-graph-associations
-    |=  [=associations:ms content=?]
+    |=  [=associations:ms content=? from=@da to=@da]
     ^-  wain
     %-  ~(rep by associations)
     |=  [[=md-resource:ms =association:ms] out=wain]
@@ -25,7 +25,7 @@
       ==
     :: walk the graph
     ::
-    (weld out (walk-graph u.graph content channel-info))
+    (weld out (walk-graph u.graph content channel-info from to))
   ::
   ++  scry-graph
     |=  graph-resource=resource:r
@@ -147,14 +147,17 @@
 :: walking graphs
 ::
 ++  walk-graph
-  |=  [=graph:gs content=? =channel-info:c]
+  |=  [=graph:gs content=? =channel-info:c from=@da to=@da]
   ^-  wain
   %-  flop
-  %+  roll  ~(val by graph)
+  %+  roll
+    %+  only-nodes-older-than  to
+    %+  only-nodes-newer-than  from
+    ~(val by graph)
   |=  [=node:gs out=wain]
   ^-  wain
   =?  out  ?=(%graph -.children.node)
-    (weld out (walk-graph p.children.node content channel-info))
+    (weld out (walk-graph p.children.node content channel-info from to))
   ?-  -.post.node
     %|
       :: do not output deleted posts
@@ -186,6 +189,46 @@
   ?.  (~(has in group-resources) group.association)
     out
   (~(put by out) md-resource association)
+:: wrappers for intuitive use of `filter-nodes-by-timestamp`:
+::  pass `nodes` as given by the `graph-store` scry and no
+::  need to worry about comparators
+::
+++  only-nodes-older-than
+  |=  [time=@da nodes=(list node:gs)]
+  %-  flop
+  (filter-nodes-by-timestamp (flop nodes) lte time)
+::
+++  only-nodes-newer-than
+  |=  [time=@da nodes=(list node:gs)]
+  (filter-nodes-by-timestamp nodes gte time)
+::
+++  filter-nodes-by-timestamp
+  |=  [nodes=(list node:gs) comparator=$-([@ @] ?) time=@da]
+  =|  out=(list node:gs)
+  :: return `out` in same time-order as `nodes`
+  ::
+  %-  flop
+  |-
+  ^-  (list node:gs)
+  ?~  nodes
+    out
+  ?-  -.post.i.nodes
+    %|
+      :: skip deleted posts
+      ::
+      $(nodes t.nodes)
+    %&
+      ?.  (comparator time-sent.p.post.i.nodes time)
+        :: assume:
+        ::  * time is monotonic
+        ::  * first `%.n` we hit indicates nodes further on are `%.n`
+        ::    (i.e. `nodes` must be ordered st. they start `%.y`,
+        ::     e.g. if want all `nodes` older than given time,
+        ::     `nodes` must start with oldest and comparator is `lth`)
+        ::
+        out
+      $(nodes t.nodes, out [i.nodes out])
+  ==
 ::
 :: io
 ::

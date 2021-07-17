@@ -19,13 +19,13 @@ Make use of the included generator to extract all graph data from your ship (wit
 ```
 
 Optional arguments:
-* `to`: `@da` up until which post data will be pulled. (TODO: implement)
+* `to`: `@da` up until which post data will be pulled. (TODO: document and debug)
 * `groups`: `(list path)` of groups to export; do not export any others. Default: export all.
 * `content`: `(unit ?)`, whether to export post content or not. Default: do not export content.
 
-Example usage exporting a specific group with post content:
+Example usage exporting entire history of a specific group with post content:
 ```
-|crunch /my-csv-file-name/csv now, =groups ~[/~zod/fake-zods-test-channel], =content [~ %.y]
+|crunch /my-csv-file-name/csv *@da, =groups ~[/~zod/fake-zods-test-channel], =content [~ %.y]
 ```
 
 ## Export graph data
@@ -46,13 +46,13 @@ Replace the group and graph with a `%chat` available on your (test) ship.
 :: build channel-info argument used by walk-graph
 =ci `channel-info:crunch-sur`[`resource:res`[entity=~zod name=%fake-zods-test-channel] `resource:res`[entity=~zod name=%lounge-5677] channel-type=%chat]
 
-:: output to Dojo with post content in the format:
+:: output entire history to Dojo with post content in the format:
 :: timestamp,ship,group,channel,channel-type,content
-(walk-graph.crunch chat-graph %.y ci)
+(walk-graph.crunch chat-graph %.y ci *@da now)
 
-:: output to csv file at path pax without post content
+:: output entire history to csv file at path pax without post content
 =pax `path`/chat/csv
-|pass (note-write-csv-to-clay.crunch pax (walk-graph.crunch chat-graph %.y ci))
+|pass (note-write-csv-to-clay.crunch pax (walk-graph.crunch chat-graph %.y ci *@da now))
 ```
 
 ## Export all graph data
@@ -67,8 +67,8 @@ Replace the group and graph with a `%chat` available on your (test) ship.
 :: scry metadata about all graphs
 =assoc-scry .^(associations:ms %gx /=metadata-store=/app-name/graph/noun)
 
-:: output to Dojo without post content
-(~(walk-graph-associations crunch [our now]) assoc-scry %.n)
+:: output entire history to Dojo without post content
+(~(walk-graph-associations crunch [our now]) assoc-scry %.n *@da now)
 ```
 
 # ACKnowledgements
