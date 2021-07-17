@@ -1,7 +1,7 @@
 /-  ms=metadata-store
 /+  crunch
 :-  %say
-|=  [[now=@da * bec=beak] [csv-path=path from=@da ~] [to=@da groups=(list path) content=? ~]]
+|=  [[now=@da * bec=beak] [csv-path=path from=@da ~] [to=@da groups=(list path) content=(unit ?) ~]]
 =/  our=@p  p.bec
 :: get all graph associations ship is a part of
 ::
@@ -20,7 +20,9 @@
 =/  file-content=wain
   %+  ~(walk-graph-associations crunch [our now])
     filtered-associations
-  content
+  ?~  content
+    %.n
+  u.content
 :: TODO: filter content by date
 ::
 [%helm-pass (note-write-csv-to-clay.crunch csv-path file-content)]

@@ -13,7 +13,7 @@ A generator and thread to make using the library as simple as a command-line cal
 
 # Usage
 ## Export multiple graphs of data
-Make use of the included generator to extract all graph data from your ship and output it to the CSV of your choice.
+Make use of the included generator to extract all graph data from your ship (without post content) and output it to the CSV of your choice.
 ```
 |crunch /my-csv-file-name/csv now
 ```
@@ -21,11 +21,11 @@ Make use of the included generator to extract all graph data from your ship and 
 Optional arguments:
 * `to`: `@da` up until which post data will be pulled. (TODO: implement)
 * `groups`: `(list path)` of groups to export; do not export any others. Default: export all.
-* `content`: `?`, whether to export content or not. Default: export content. (TODO: flip default)
+* `content`: `(unit ?)`, whether to export post content or not. Default: do not export content.
 
-Example usage exporting a specific group with no content:
+Example usage exporting a specific group with post content:
 ```
-|crunch /my-csv-file-name/csv now, =groups ~[/~zod/fake-zods-test-channel], =content %.n
+|crunch /my-csv-file-name/csv now, =groups ~[/~zod/fake-zods-test-channel], =content [~ %.y]
 ```
 
 ## Export graph data
