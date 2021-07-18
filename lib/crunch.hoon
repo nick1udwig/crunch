@@ -195,12 +195,12 @@
 ::
 ++  only-nodes-older-than
   |=  [time=@da nodes=(list node:gs)]
-  %-  flop
-  (filter-nodes-by-timestamp (flop nodes) lte time)
+  (filter-nodes-by-timestamp nodes lte time)
 ::
 ++  only-nodes-newer-than
   |=  [time=@da nodes=(list node:gs)]
-  (filter-nodes-by-timestamp nodes gte time)
+  %-  flop
+  (filter-nodes-by-timestamp (flop nodes) gte time)
 ::
 ++  filter-nodes-by-timestamp
   |=  [nodes=(list node:gs) comparator=$-([@ @] ?) time=@da]
