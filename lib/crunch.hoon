@@ -111,8 +111,19 @@
   ^-  @t
   %-  crip
   %-  mesc
+  %-  replace-tape-commas-with-semicolons
   %-  trip
   cord
+::
+++  replace-tape-commas-with-semicolons
+  |=  string=tape
+  ^-  tape
+  =/  comma-indices=(list @ud)  (fand "," string)
+  |-
+  ^-  tape
+  ?~  comma-indices
+    string
+  $(string (snap string i.comma-indices ';'), comma-indices t.comma-indices)
 ::
 ++  contents-to-cord
   |=  contents=(list content:p)
