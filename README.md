@@ -19,13 +19,13 @@ Make use of the included generator to extract all graph data from your ship (wit
 ```
 
 Optional arguments:
-* `to`: `@da` up until which post data will be pulled. (TODO: document and debug)
+* `to`: `@da` up until which post data will be pulled.
 * `groups`: `(list path)` of groups to export; do not export any others. Default: export all.
 * `content`: `(unit ?)`, whether to export post content or not. Default: do not export content.
 
-Example usage exporting entire history of a specific group with post content:
+Example usage exporting last ten days of a specific group with post content:
 ```
-|crunch /my-csv-file-name/csv *@da, =groups ~[/~zod/fake-zods-test-channel], =content [~ %.y]
+|crunch /my-csv-file-name/csv (sub now ~d10), =groups ~[/~zod/fake-zods-test-channel], =content [~ %.y]
 ```
 
 ## Export graph data
