@@ -25,7 +25,30 @@
       ==
     :: walk the graph
     ::
-    (weld out (walk-graph u.graph content channel-info from to))
+    ?+  module.config.metadatum.association
+      :: non-chat (e.g. links & notes)
+      ::
+        %+  weld  out
+        %:
+          walk-nested-graph-for-most-recent-entries
+          u.graph
+          content
+          channel-info
+          from
+          to
+        ==
+      ::
+      %chat
+        %+  weld  out
+        %:
+          walk-chat-graph
+          u.graph
+          content
+          channel-info
+          from
+          to
+        ==
+    ==
   ::
   ++  scry-graph
     |=  graph-resource=resource:r
@@ -146,7 +169,7 @@
 ::
 :: walking graphs
 ::
-++  walk-graph
+++  walk-chat-graph
   |=  [=graph:gs content=? =channel-info:c from=@da to=@da]
   ^-  wain
   %-  flop
@@ -156,8 +179,6 @@
     ~(val by graph)
   |=  [=node:gs out=wain]
   ^-  wain
-  =?  out  ?=(%graph -.children.node)
-    (weld out (walk-graph p.children.node content channel-info from to))
   ?-  -.post.node
     %|
       :: do not output deleted posts
@@ -175,6 +196,59 @@
         %&
           %+  join-cords  ','
             ~[post-no-content (contents-to-cord contents.p.post.node)]
+      ==
+  ==
+::
+++  walk-nested-graph-for-most-recent-entries
+  |=  [=graph:gs content=? =channel-info:c from=@da to=@da]
+  ^-  wain
+  =|  out=wain
+  =|  most-recent-post-content=@t
+  =/  nodes
+    %+  only-nodes-older-than  to
+    %+  only-nodes-newer-than  from
+    ~(val by graph)
+  %-  flop
+  |-
+  ^-  wain
+  ?~  nodes
+    ?:  =('' most-recent-post-content)
+      :: don't return a cell: `['' ~]`
+      ::
+      out
+    [most-recent-post-content out]
+  ::
+  =?  out  ?=(%graph -.children.i.nodes)
+    %+  weld  out
+    %:
+      walk-nested-graph-for-most-recent-entries
+      p.children.i.nodes
+      content
+      channel-info
+      from
+      to
+    ==
+  ::
+  ?-  -.post.i.nodes
+    %|
+      :: do not keep deleted posts
+      ::
+      $(nodes t.nodes)
+    %&
+      ?~  contents.p.post.i.nodes
+        :: do not keep structural nodes
+        ::
+        $(nodes t.nodes)
+      =/  post-no-content=@t  (format-post-to-cord p.post.i.nodes channel-info)
+      %=  $
+        nodes  t.nodes
+        most-recent-post-content
+          ?-  content
+            %|  post-no-content
+            %&
+              %+  join-cords  ','
+                ~[post-no-content (contents-to-cord contents.p.post.i.nodes)]
+          ==
       ==
   ==
 ::
