@@ -48,7 +48,7 @@ Replace the group and graph with a `%chat` available on your (test) ship.
 
 :: output entire history to Dojo with post content in the format:
 :: timestamp,ship,group,channel,channel-type,content
-(walk-graph.crunch chat-graph %.y ci *@da now)
+(walk-chat-graph.crunch chat-graph %.y ci *@da now)
 
 :: output entire history to csv file at path pax without post content
 =pax `path`/chat/csv
