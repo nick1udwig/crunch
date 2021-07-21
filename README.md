@@ -19,7 +19,7 @@ Make use of the included generator to extract all graph data from your ship (wit
 ```
 
 Optional arguments:
-* `to`: `@da` up until which post data will be pulled.
+* `to`: `(unit @da)` up until which post data will be pulled.
 * `groups`: `(list path)` of groups to export; do not export any others. Default: export all.
 * `content`: `(unit ?)`, whether to export post content or not. Default: do not export content.
 
