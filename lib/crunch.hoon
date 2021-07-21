@@ -5,11 +5,19 @@
   ++  walk-graph-associations
     |=  [=associations:ms content=? from=@da to=@da]
     ^-  wain
+    :: graph resources `our` has: to avoid scrying, e.g.,
+    ::  a graph `our` has left and can no longer access
+    ::
+    =/  accessible-graphs=(set resource:r)  (scry-graph-resources)
     %-  ~(rep by associations)
     |=  [[=md-resource:ms =association:ms] out=wain]
     ^-  wain
     ?>  ?=(%graph app-name.md-resource)
     ?>  ?=(%graph -.config.metadatum.association)
+    :: ensure graph, given by association, exists in `our`
+    ::
+    ?.  (~(has in accessible-graphs) resource.md-resource)
+      out
     :: scry the graph
     ::
     =/  graph=(unit graph:gs)  (scry-graph resource.md-resource)
@@ -69,6 +77,21 @@
     ?~  graph.q.scry-response
       ~
     [~ graph.q.scry-response]
+  ::
+  ++  scry-graph-resources
+    |=  ~
+    ^-  (set resource:r)
+    =/  scry-response=update:gs
+      .^  update:gs
+        %gx
+        (scot %p our)
+        %graph-store
+        (scot %da now)
+        /keys/noun
+      ==
+    ?.  ?=(%keys -.q.scry-response)
+      ~
+    resources.q.scry-response
   ::
   ++  scry-graph-associations
     |=  ~
