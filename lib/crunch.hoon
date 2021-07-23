@@ -5,7 +5,7 @@
   ++  walk-graph-associations
     |=  [=associations:ms content=? from=@da to=@da]
     ^-  wain
-    :: graph resources `our` has: to avoid scrying, e.g.,
+    :: graph resources in `our`; used to avoid scrying, e.g.,
     ::  a graph `our` has left and can no longer access
     ::
     =/  accessible-graphs=(set resource:r)  (scry-graph-resources)
@@ -92,6 +92,8 @@
     ?.  ?=(%keys -.q.scry-response)
       ~
     resources.q.scry-response
+  :: helper arm for callers to get graph associations
+  ::  to pass to `walk-graph-associations`
   ::
   ++  scry-graph-associations
     |=  ~
@@ -109,12 +111,12 @@
 ::
 :: parsing and formatting
 ::
-++  tac  (cury cat 3)
+++  concatenate-cords  (cury cat 3)
 ::
 ++  resource-to-cord
   |=  =resource:r
   ^-  @t
-  :(tac (scot %p entity.resource) '/' (scot %tas name.resource))
+  :(concatenate-cords (scot %p entity.resource) '/' (scot %tas name.resource))
 ::
 ++  paths-to-resources
   |=  paxs=(list path)
@@ -134,6 +136,9 @@
   ^-  @t
   %-  crip
   %-  mesc
+  :: specific to CSVs: make sure content does not
+  ::  contain commas (only allowed as delimiters)
+  ::
   %-  replace-tape-commas-with-semicolons
   %-  trip
   cord
@@ -173,10 +178,10 @@
   ^-  @t
   ?-  -.reference
     %group  (resource-to-cord group.reference)
-    %graph  :(tac (resource-to-cord group.reference) ': ' (resource-to-cord resource.uid.reference))
+    %graph  :(concatenate-cords (resource-to-cord group.reference) ': ' (resource-to-cord resource.uid.reference))
   ==
 ::
-++  format-post-to-cord
+++  format-post-to-comma-separated-cord
   |=  [=post:gs =channel-info:c]
   ^-  @t
   %+  join-cords
@@ -187,6 +192,8 @@
     (resource-to-cord group.channel-info)
     (resource-to-cord channel.channel-info)
     (scot %tas channel-type.channel-info)
+    :: exclude content; optionally add later
+    ::
   ==
 ::
 ++  join-cords
@@ -199,7 +206,7 @@
     :: don't put delimiter before first element
     ::
     cord
-  :(tac out delimiter cord)
+  :(concatenate-cords out delimiter cord)
 ::
 :: walking graphs
 ::
@@ -208,6 +215,8 @@
   ^-  wain
   %-  flop
   %+  roll
+    :: filter by time
+    ::
     %+  only-nodes-older-than  to
     %+  only-nodes-newer-than  from
     ~(val by graph)
@@ -224,7 +233,7 @@
         ::
         out
       :_  out
-      =/  post-no-content=@t  (format-post-to-cord p.post.node channel-info)
+      =/  post-no-content=@t  (format-post-to-comma-separated-cord p.post.node channel-info)
       ?-  content
         %|  post-no-content
         %&
@@ -239,6 +248,8 @@
   =|  out=wain
   =|  most-recent-post-content=@t
   =/  nodes
+    :: filter by time
+    ::
     %+  only-nodes-older-than  to
     %+  only-nodes-newer-than  from
     ~(val by graph)
@@ -248,6 +259,8 @@
   ?~  nodes
     ?:  =('' most-recent-post-content)
       :: don't return a cell: `['' ~]`
+      ::  we want either an empty list `~`
+      ::  or a list populated with actual entries
       ::
       out
     [most-recent-post-content out]
@@ -273,7 +286,7 @@
         :: do not keep structural nodes
         ::
         $(nodes t.nodes)
-      =/  post-no-content=@t  (format-post-to-cord p.post.i.nodes channel-info)
+      =/  post-no-content=@t  (format-post-to-comma-separated-cord p.post.i.nodes channel-info)
       %=  $
         nodes  t.nodes
         most-recent-post-content
