@@ -12,8 +12,10 @@
     %-  ~(rep by associations)
     |=  [[=md-resource:ms =association:ms] out=wain]
     ^-  wain
-    ?>  ?=(%graph app-name.md-resource)
-    ?>  ?=(%graph -.config.metadatum.association)
+    ?.  ?=(%graph app-name.md-resource)
+      out
+    ?.  ?=(%graph -.config.metadatum.association)
+      out
     :: ensure graph, given by association, exists in `our`
     ::
     ?.  (~(has in accessible-graphs) resource.md-resource)
