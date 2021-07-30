@@ -28,10 +28,9 @@
     :: prepare channel-info argument
     ::
     =/  channel-info=channel-info:c
-      :*
-        group.association
-        resource.md-resource
-        module.config.metadatum.association
+      :*  group.association
+          resource.md-resource
+          module.config.metadatum.association
       ==
     :: walk the graph
     ::
@@ -39,24 +38,22 @@
       :: non-chat (e.g. links & notes)
       ::
         %+  weld  out
-        %:
-          walk-nested-graph-for-most-recent-entries
-          u.graph
-          content
-          channel-info
-          from
-          to
+        %:  walk-nested-graph-for-most-recent-entries
+            u.graph
+            content
+            channel-info
+            from
+            to
         ==
       ::
       %chat
         %+  weld  out
-        %:
-          walk-chat-graph
-          u.graph
-          content
-          channel-info
-          from
-          to
+        %:  walk-chat-graph
+            u.graph
+            content
+            channel-info
+            from
+            to
         ==
     ==
   ::
@@ -186,14 +183,13 @@
   ^-  @t
   %+  join-cords
     ','
-  :~
-    (scot %da time-sent.post)
-    (scot %p author.post)
-    (resource-to-cord group.channel-info)
-    (resource-to-cord channel.channel-info)
-    (scot %tas channel-type.channel-info)
-    :: exclude content; optionally add later
-    ::
+  :~  (scot %da time-sent.post)
+      (scot %p author.post)
+      (resource-to-cord group.channel-info)
+      (resource-to-cord channel.channel-info)
+      (scot %tas channel-type.channel-info)
+      :: exclude content; optionally add later
+      ::
   ==
 ::
 ++  join-cords
@@ -267,13 +263,12 @@
   ::
   =?  out  ?=(%graph -.children.i.nodes)
     %+  weld  out
-    %:
-      walk-nested-graph-for-most-recent-entries
-      p.children.i.nodes
-      content
-      channel-info
-      from
-      to
+    %:  walk-nested-graph-for-most-recent-entries
+        p.children.i.nodes
+        content
+        channel-info
+        from
+        to
     ==
   ::
   ?-  -.post.i.nodes
