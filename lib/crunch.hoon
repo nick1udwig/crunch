@@ -111,12 +111,10 @@
 ::
 :: parsing and formatting
 ::
-++  concatenate-cords  (cury cat 3)
-::
 ++  resource-to-cord
   |=  =resource:r
   ^-  @t
-  :(concatenate-cords (scot %p entity.resource) '/' (scot %tas name.resource))
+  (rap 3 (scot %p entity.resource) '/' (scot %tas name.resource) ~)
 ::
 ++  paths-to-resources
   |=  paxs=(list path)
@@ -178,7 +176,7 @@
   ^-  @t
   ?-  -.reference
     %group  (resource-to-cord group.reference)
-    %graph  :(concatenate-cords (resource-to-cord group.reference) ': ' (resource-to-cord resource.uid.reference))
+    %graph  (rap 3 (resource-to-cord group.reference) ': ' (resource-to-cord resource.uid.reference) ~)
   ==
 ::
 ++  format-post-to-comma-separated-cord
@@ -206,7 +204,7 @@
     :: don't put delimiter before first element
     ::
     cord
-  :(concatenate-cords out delimiter cord)
+  (rap 3 out delimiter cord ~)
 ::
 :: walking graphs
 ::
