@@ -1,0 +1,9 @@
+:~  title+'Crunch'
+    info+'Export group activity to CSV'
+    color+0x4b.4b4b
+    glob-http+['https://raw.githubusercontent.com/hosted-fornet/crunch/87d053d8a33e07fb710f5979f4d63eee1bc7cdc8/globs/glob-0v1.celik.t8bmt.la8bc.bqb6h.8dma1.glob' 0v1.celik.t8bmt.la8bc.bqb6h.8dma1]
+    base+'crunch'
+    version+[1 0 0]
+    website+'https://github.com/hosted-fornet/crunch'
+    license+'MIT'
+==
