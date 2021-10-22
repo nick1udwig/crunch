@@ -176,6 +176,7 @@
   ?-  -.reference
     %group  (resource-to-cord group.reference)
     %graph  (rap 3 (resource-to-cord group.reference) ': ' (resource-to-cord resource.uid.reference) ~)
+    %app    (rap 3 'app: ' (scot %p ship.reference) ' %' (scot %tas desk.reference) ' ' "{<path.reference>}")
   ==
 ::
 ++  format-post-to-comma-separated-cord
@@ -351,6 +352,6 @@
 ++  note-write-csv-to-clay
   |=  [pax=path file-content=wain]
   ?>  =(%csv (snag (dec (lent pax)) pax))
-  [%c [%info %home %& [pax %ins %csv !>(file-content)]~]]
+  [%c [%info %crunch %& [pax %ins %csv !>(file-content)]~]]
 ::
 --

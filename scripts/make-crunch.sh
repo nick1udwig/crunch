@@ -43,6 +43,7 @@ fi
 cp -r $path_to_app_code "./${app_name}-tmp"
 
 # Build the desk.
+./symbolic-merge.sh landscape $app_name
 ./symbolic-merge.sh base-dev $app_name
 ./symbolic-merge.sh garden-dev $app_name
 ./symbolic-merge.sh ${app_name}-dev-tmp $app_name
