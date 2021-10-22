@@ -1,11 +1,23 @@
 # Crunch
 
-The Urbit network is growing -- but it is unclear how much.
-Crunch is a set of tools to export Urbit group activity so community growth can be quantified.
+Crunch is a set of tools to export Urbit group activity to CSV so community growth can be quantified.
 It consists of a library to provide the tools, and a generator to make using the library as simple as a command-line call.
 
 
 # Usage
+## Installation
+Install as you would any app from my distribution ship, `~dister-hosted-labweb`:
+
+* Via the Grid GUI,
+* From the Dojo: `|install ~dister-hosted-labweb %crunch`,
+* From source: use `scripts/make-crunch.sh`.
+
+## CSVs will be output to the `%crunch` desk
+Mount the `%crunch` desk to access the CSV files output by the script:
+```
+|mount %crunch
+```
+
 ## Export graphs using `|crunch` generator
 Use the `|crunch` generator to export all group graph data from your ship (without post content) and output it to a CSV file at the specified path:
 ```
