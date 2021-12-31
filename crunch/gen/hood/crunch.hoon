@@ -15,9 +15,9 @@
 =/  filtered-associations=associations:ms
   ?~  groups
     associations
-  %+  filter-associations-by-group-resources.crunch
+  %+  filter-associations-by-group-resources:crunch
     associations
-  (paths-to-resources.crunch groups)
+  (paths-to-resources:crunch groups)
 :: walk graphs to extract content
 ::
 =/  file-content=wain
@@ -27,4 +27,4 @@
     from
     ?:  =(*@da to)  now  to
   ==
-[%helm-pass (note-write-csv-to-clay.crunch csv-path file-content)]
+[%helm-pass (note-write-csv-to-clay:crunch csv-path file-content)]
