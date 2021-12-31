@@ -6,9 +6,10 @@ It consists of a library to provide the tools, and a generator to make using the
 
 # Usage
 ## Installation
+
 Install as you would any app from my distribution ship, `~dister-hosted-labweb`:
 
-* Via the Grid GUI,
+* Via the Grid GUI, distributed from `~dister-hosted-labweb`
 * From the Dojo: `|install ~dister-hosted-labweb %crunch`,
 * From source: use `scripts/make-crunch.sh`.
 
@@ -18,13 +19,15 @@ Mount the `%crunch` desk to access the CSV files output by the script:
 |mount %crunch
 ```
 
-## Export graphs using `|crunch` generator
-Use the `|crunch` generator to export all group graph data from your ship (without post content) and output it to a CSV file at the specified path:
+
+## Export graphs using `+crunch` generator
+
+Use the `+crunch` generator to export all group graph data from your ship (without post content) and output it to a CSV file at the specified path:
 ```
-|crunch /path/to/my-csv-file/csv *@da
+:hood &helm-pass +crunch!crunch /path/to/my-csv-file/csv *@da
 ```
 
-The `|crunch` generator accepts the following arguments:
+The `+crunch` generator accepts the following arguments:
 
 Argument  | Type          | Optional? | Description
 --------- | ------------- | --------- | -----------
@@ -36,11 +39,13 @@ Argument  | Type          | Optional? | Description
 
 To demonstrate using the arguments, the following exports activity of two specific groups, between 10 days ago and 5 days ago, with post content:
 ```
-|crunch /group-dumps/ten-to-five/csv (sub now ~d10), =to (sub now ~d5), =groups ~[/~zod/fake-zods-test-channel /~bus/fake-buss-test-channel], =content [~ %.y]
+:hood &helm-pass +crunch!crunch /group-dumps/ten-to-five/csv (sub now ~d10), =to (sub now ~d5), =groups ~[/~zod/fake-zods-test-channel /~bus/fake-buss-test-channel], =content [~ %.y]
 ```
+
 
 ## Advanced usage: `crunch` library
 ### Export specific `%chat` graph data
+
 The following is example usage of the `crunch` library to export data from a `%chat` graph and print to the Dojo or to CSV using the `walk-chat-graph` arm.
 In the example, the group is `~zod/fake-zods-test-channel` and the graph is `~zod/lounge-5677`.
 Replace the group and graph with the desired `%chat` graph.
@@ -65,6 +70,7 @@ Replace the group and graph with the desired `%chat` graph.
 =pax `path`/chat/csv
 |pass (note-write-csv-to-clay.crunch pax (walk-chat-graph.crunch chat-graph %.y ci *@da now))
 ```
+
 
 ### Export specific non-`%chat` graph data
 Data can also be exported from `%links` or `%publish` graphs.
@@ -110,9 +116,13 @@ In the example, *all graphs the user is a part of will be exported*.
 # Performance
 Testing on my personal ship on 210724 with pier size `3.4GB`.
 Run on an Intel i7-1065G7.
-The `|crunch` generator took less than one minute to export the entire history of all graphs without post content.
+The `+crunch` generator took less than one minute to export the entire history of all graphs without post content.
 With post content, took around one-and-a-half minutes.
 The resulting CSV was `31MB` without post content or `56MB` with post content.
+
+
+# Questions?
+Direct questions directly to `~hosted-fornet`, or to my group, `~wisdem-hosted-labweb/homunculus`.
 
 
 # Acknowledgements
